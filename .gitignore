@@ -4,3 +4,5 @@ polls/__pycache__/models.cpython-312.pyc
 polls/__pycache__/admin.cpython-312.pyc
 polls/__pycache__/views.cpython-312.pyc
 db.sqlite3
+polls/__pycache__/admin.cpython-312.pyc
+.gitignore
