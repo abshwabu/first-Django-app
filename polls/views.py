@@ -10,7 +10,7 @@ from .models import Choice, Question
 class IndexView(generic.ListView):
     template_name = "polls/index.html"
     context_object_name = "latest_question_list"
-
+C:\Users\abdul\OneDrive\Documents\python\mysite\mysite\templates
     def get_queryset(self):
         """
         Return the last five published questions (not including those set to be
