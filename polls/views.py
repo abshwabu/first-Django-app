@@ -1,5 +1,5 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
@@ -32,4 +32,23 @@ class ResultsView(generic.DetailView):
 
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
-    return render(request, "polls/results.html", {"question": question})
+
+    try:
+        selected_choice_id = request.POST['choice']
+        selected_choice = question.choice_set.get(pk=selected_choice_id)
+    except (KeyError, Choice.DoesNotExist):
+        # Redisplay the question voting form.
+        return render(request, 'polls/detail.html', {
+            'question': question,
+            'error_message': "You didn't select a choice.",
+        })
+    else:
+        # Print the selected choice_id
+        print(f"Selected Choice ID: {selected_choice_id}")
+
+        # Increment the vote count for the selected choice and save
+        selected_choice.votes += 1
+        selected_choice.save()
+
+        # Redirect to the results page
+        return redirect('polls:results', pk=question.id)
